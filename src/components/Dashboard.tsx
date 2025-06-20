@@ -12,7 +12,7 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
   const busTypes = [
     {
       id: 'local' as const,
-      title: 'Local City Bus',
+      title: 'LOCAL CITY BUS',
       icon: MapPin,
       color: 'bg-emerald-100 text-emerald-700',
       badge: 'Most Popular',
@@ -22,7 +22,7 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
     },
     {
       id: 'district' as const,
-      title: 'District Bus',
+      title: 'DISTRICT BUS',
       icon: Clock,
       color: 'bg-blue-100 text-blue-700',
       badge: 'Express Service',
@@ -32,7 +32,7 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
     },
     {
       id: 'state' as const,
-      title: 'State Bus',
+      title: 'STATE BUS',
       icon: Users,
       color: 'bg-purple-100 text-purple-700',
       badge: 'Premium',
