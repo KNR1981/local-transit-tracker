@@ -22,7 +22,7 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
     },
     {
       id: 'district' as const,
-      title: 'District Express',
+      title: 'District Bus',
       icon: Clock,
       color: 'bg-blue-100 text-blue-700',
       badge: 'Express Service',
@@ -32,7 +32,7 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
     },
     {
       id: 'state' as const,
-      title: 'State Highway',
+      title: 'State Bus',
       icon: Users,
       color: 'bg-purple-100 text-purple-700',
       badge: 'Premium',
