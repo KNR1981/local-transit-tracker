@@ -95,16 +95,16 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
           <div className="bg-white bg-opacity-95 rounded-2xl shadow-xl p-8 max-w-3xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-3xl font-bold text-blue-600">250+</div>
+                <div className="text-3xl font-bold text-blue-600">9000+</div>
                 <div className="text-gray-600">Active Buses</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-green-600">50+</div>
+                <div className="text-3xl font-bold text-green-600">36000+</div>
                 <div className="text-gray-600">Routes Covered</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-purple-600">98%</div>
-                <div className="text-gray-600">Accuracy Rate</div>
+                <div className="text-3xl font-bold text-purple-600">45000+</div>
+                <div className="text-gray-600">Employees</div>
               </div>
             </div>
           </div>
