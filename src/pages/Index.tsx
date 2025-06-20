@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Header from "@/components/Header";
 import LandingPage from "@/components/LandingPage";
@@ -33,6 +32,12 @@ const Index = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     setCurrentView('landing');
+  };
+
+  const handleLogoClick = () => {
+    if (isAuthenticated) {
+      setCurrentView('dashboard');
+    }
   };
 
   const handleBusTypeSelect = (type: BusType) => {
@@ -106,6 +111,7 @@ const Index = () => {
           onAuthClick={handleAuthClick}
           isAuthenticated={isAuthenticated}
           onLogout={handleLogout}
+          onLogoClick={handleLogoClick}
         />
       )}
       
