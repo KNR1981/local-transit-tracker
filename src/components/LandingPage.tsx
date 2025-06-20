@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Clock, Users, Smartphone, Shield, Zap } from "lucide-react";
@@ -47,11 +46,10 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
       <div 
         className="container mx-auto px-4 py-16 relative"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/lovable-uploads/eb128bba-7d30-499e-9ec7-09a3f77b504d.png')`,
+          backgroundImage: `url('/lovable-uploads/eb128bba-7d30-499e-9ec7-09a3f77b504d.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: 'black'
+          backgroundRepeat: 'no-repeat'
         }}
       >
         <div className="text-center max-w-4xl mx-auto">
