@@ -18,31 +18,94 @@ const RouteSelection = ({ busType, onBack, onNext }: RouteSelectionProps) => {
   const [fromSuggestions, setFromSuggestions] = useState<string[]>([]);
   const [toSuggestions, setToSuggestions] = useState<string[]>([]);
 
-  // Hyderabad location data
-  const locationAreas = [
-    {
-      emoji: '🏙',
-      area: 'Central Hyderabad',
-      locations: ['Abids', 'Koti', 'Nampally', 'Basheerbagh', 'Himayatnagar', 'Lakdikapul', 'Hyderguda', 'King Koti', 'Chikkadpally', 'Narayanguda']
-    },
-    {
-      emoji: '🕌',
-      area: 'Old City (South Hyderabad)',
-      locations: ['Charminar', 'Mecca Masjid', 'Falaknuma', 'Shalibanda', 'Barkas', 'Chandrayangutta', 'Dabeerpura', 'Yakutpura', 'Bahadurpura', 'Santoshnagar']
-    },
-    {
-      emoji: '🌆',
-      area: 'North Hyderabad',
-      locations: ['Secunderabad', 'Malkajgiri', 'Tarnaka', 'Lalaguda', 'Nacharam', 'Moula Ali', 'ECIL', 'Neredmet', 'Kapra', 'Kushaiguda']
-    },
-    {
-      emoji: '🛍',
-      area: 'West Hyderabad',
-      locations: ['Ameerpet', 'Kukatpally', 'Miyapur', 'Moosapet', 'Sanathnagar', 'Balanagar', 'SR Nagar (Sanathnagar)', 'Erragadda', 'Bharat Nagar', 'Jagadgirigutta']
+  // Location data based on bus type
+  const getLocationData = () => {
+    switch (busType) {
+      case 'local':
+        return {
+          title: 'Hyderabad Areas',
+          areas: [
+            {
+              emoji: '🏙',
+              area: 'Central Hyderabad',
+              locations: ['Abids', 'Koti', 'Nampally', 'Basheerbagh', 'Himayatnagar', 'Lakdikapul', 'Hyderguda', 'King Koti', 'Chikkadpally', 'Narayanguda']
+            },
+            {
+              emoji: '🕌',
+              area: 'Old City (South Hyderabad)',
+              locations: ['Charminar', 'Mecca Masjid', 'Falaknuma', 'Shalibanda', 'Barkas', 'Chandrayangutta', 'Dabeerpura', 'Yakutpura', 'Bahadurpura', 'Santoshnagar']
+            },
+            {
+              emoji: '🌆',
+              area: 'North Hyderabad',
+              locations: ['Secunderabad', 'Malkajgiri', 'Tarnaka', 'Lalaguda', 'Nacharam', 'Moula Ali', 'ECIL', 'Neredmet', 'Kapra', 'Kushaiguda']
+            },
+            {
+              emoji: '🛍',
+              area: 'West Hyderabad',
+              locations: ['Ameerpet', 'Kukatpally', 'Miyapur', 'Moosapet', 'Sanathnagar', 'Balanagar', 'SR Nagar (Sanathnagar)', 'Erragadda', 'Bharat Nagar', 'Jagadgirigutta']
+            }
+          ]
+        };
+      case 'district':
+        return {
+          title: 'Telangana Districts',
+          areas: [
+            {
+              emoji: '🏛',
+              area: 'Northern Districts',
+              locations: ['Adilabad', 'Nizamabad', 'Karimnagar', 'Peddapalli', 'Jagitial', 'Rajanna Sircilla', 'Kumuram Bheem Asifabad', 'Mancherial', 'Nirmal']
+            },
+            {
+              emoji: '🏙',
+              area: 'Central Districts',
+              locations: ['Hyderabad', 'Medchal Malkajgiri', 'Ranga Reddy', 'Sangareddy', 'Medak', 'Kamareddy', 'Siddipet', 'Vikarabad']
+            },
+            {
+              emoji: '🌾',
+              area: 'Southern Districts',
+              locations: ['Mahabubnagar', 'Nagarkurnool', 'Wanaparthy', 'Jogulamba Gadwal', 'Narayanpet']
+            },
+            {
+              emoji: '🌳',
+              area: 'Eastern Districts',
+              locations: ['Warangal', 'Hanumakonda', 'Jangaon', 'Jayashankar Bhupalpally', 'Mulugu', 'Bhadradri Kothagudem', 'Khammam', 'Mahabubabad', 'Suryapet', 'Yadadri Bhuvanagiri', 'Nalgonda']
+            }
+          ]
+        };
+      case 'state':
+        return {
+          title: 'Indian States',
+          areas: [
+            {
+              emoji: '🏔',
+              area: 'Northern States',
+              locations: ['Punjab', 'Haryana', 'Himachal Pradesh', 'Uttarakhand', 'Uttar Pradesh', 'Bihar', 'Jharkhand']
+            },
+            {
+              emoji: '🌊',
+              area: 'Western States',
+              locations: ['Rajasthan', 'Gujarat', 'Maharashtra', 'Goa', 'Madhya Pradesh', 'Chhattisgarh']
+            },
+            {
+              emoji: '🌴',
+              area: 'Southern States',
+              locations: ['Karnataka', 'Andhra Pradesh', 'Telangana', 'Tamil Nadu', 'Kerala']
+            },
+            {
+              emoji: '🏞',
+              area: 'Eastern & Northeastern States',
+              locations: ['West Bengal', 'Odisha', 'Assam', 'Arunachal Pradesh', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Sikkim', 'Tripura']
+            }
+          ]
+        };
+      default:
+        return { title: '', areas: [] };
     }
-  ];
+  };
 
-  const allLocations = locationAreas.flatMap(area => area.locations);
+  const locationData = getLocationData();
+  const allLocations = locationData.areas.flatMap(area => area.locations);
 
   const handleFromChange = (value: string) => {
     setFrom(value);
@@ -76,9 +139,34 @@ const RouteSelection = ({ busType, onBack, onNext }: RouteSelectionProps) => {
   const getBusTypeTitle = () => {
     switch (busType) {
       case 'local': return 'Local City Bus';
-      case 'district': return 'District Express';
-      case 'state': return 'State Highway';
+      case 'district': return 'District Bus';
+      case 'state': return 'State Bus';
       default: return 'Bus';
+    }
+  };
+
+  const getPopularRoutes = () => {
+    switch (busType) {
+      case 'local':
+        return [
+          { route: 'Secunderabad → Charminar', count: '25 buses' },
+          { route: 'Ameerpet → ECIL', count: '18 buses' },
+          { route: 'Kukatpally → Koti', count: '22 buses' }
+        ];
+      case 'district':
+        return [
+          { route: 'Hyderabad → Warangal', count: '12 buses' },
+          { route: 'Karimnagar → Nizamabad', count: '8 buses' },
+          { route: 'Khammam → Nalgonda', count: '10 buses' }
+        ];
+      case 'state':
+        return [
+          { route: 'Telangana → Karnataka', count: '15 buses' },
+          { route: 'Andhra Pradesh → Tamil Nadu', count: '20 buses' },
+          { route: 'Maharashtra → Gujarat', count: '18 buses' }
+        ];
+      default:
+        return [];
     }
   };
 
@@ -178,10 +266,10 @@ const RouteSelection = ({ busType, onBack, onNext }: RouteSelectionProps) => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Hyderabad Areas</CardTitle>
+              <CardTitle>{locationData.title}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {locationAreas.map((area, index) => (
+              {locationData.areas.map((area, index) => (
                 <div key={index} className="border-l-4 border-blue-200 pl-4">
                   <div className="flex items-center mb-2">
                     <span className="text-2xl mr-2">{area.emoji}</span>
@@ -199,18 +287,12 @@ const RouteSelection = ({ busType, onBack, onNext }: RouteSelectionProps) => {
         <div className="mt-6 bg-blue-50 rounded-lg p-4">
           <h3 className="font-semibold text-blue-900 mb-2">Popular Routes</h3>
           <div className="space-y-2">
-            <div className="flex justify-between items-center text-sm">
-              <span>Secunderabad → Charminar</span>
-              <span className="text-blue-600">25 buses</span>
-            </div>
-            <div className="flex justify-between items-center text-sm">
-              <span>Ameerpet → ECIL</span>
-              <span className="text-blue-600">18 buses</span>
-            </div>
-            <div className="flex justify-between items-center text-sm">
-              <span>Kukatpally → Koti</span>
-              <span className="text-blue-600">22 buses</span>
-            </div>
+            {getPopularRoutes().map((route, index) => (
+              <div key={index} className="flex justify-between items-center text-sm">
+                <span>{route.route}</span>
+                <span className="text-blue-600">{route.count}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
