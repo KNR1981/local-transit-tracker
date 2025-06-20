@@ -67,7 +67,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
         }
       ];
     } else {
-      // State bus - keep original data
+      // State bus - updated first three images to match local/district buses
       return [
         {
           id: 'bus-1',
@@ -78,7 +78,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           capacity: 'High',
           features: ['GPS Tracking', 'Low Floor Entry'],
           color: 'bg-orange-500',
-          icon: '🚌'
+          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png'
         },
         {
           id: 'bus-2',
@@ -89,7 +89,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           capacity: 'Medium',
           features: ['GPS Tracking', 'Limited Stops', 'Fast Transit'],
           color: 'bg-blue-500',
-          icon: '🚍'
+          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png'
         },
         {
           id: 'bus-3',
@@ -100,7 +100,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           capacity: 'High',
           features: ['GPS Tracking', 'Environment Friendly', 'CNG Powered'],
           color: 'bg-green-500',
-          icon: '🚐'
+          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png'
         },
         {
           id: 'bus-4',
