@@ -1,74 +1,134 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Clock, Users, Zap, MapPin, Bus } from "lucide-react";
+import { ArrowLeft, Clock, Zap, MapPin } from "lucide-react";
 
 interface BusOptionsProps {
   from: string;
   to: string;
+  busType?: 'local' | 'district' | 'state';
   onBack: () => void;
   onSelectBus: (busId: string) => void;
 }
 
-const BusOptions = ({ from, to, onBack, onSelectBus }: BusOptionsProps) => {
-  const buses = [
-    {
-      id: 'bus-1',
-      name: 'Ordinary Bus',
-      type: 'Non-AC Regular',
-      duration: '45 mins',
-      nextArrival: '8 mins',
-      capacity: 'High',
-      features: ['GPS Tracking', 'Low Floor Entry'],
-      color: 'bg-orange-500',
-      icon: '🚌'
-    },
-    {
-      id: 'bus-2',
-      name: 'Metro Bus',
-      type: 'Express Service',
-      duration: '30 mins',
-      nextArrival: '12 mins',
-      capacity: 'Medium',
-      features: ['GPS Tracking', 'Limited Stops', 'Fast Transit'],
-      color: 'bg-blue-500',
-      icon: '🚍'
-    },
-    {
-      id: 'bus-3',
-      name: 'Green Non-AC Bus',
-      type: 'Eco-Friendly',
-      duration: '40 mins',
-      nextArrival: '5 mins',
-      capacity: 'High',
-      features: ['GPS Tracking', 'Environment Friendly', 'CNG Powered'],
-      color: 'bg-green-500',
-      icon: '🚐'
-    },
-    {
-      id: 'bus-4',
-      name: 'Green AC Bus',
-      type: 'AC Comfort',
-      duration: '35 mins',
-      nextArrival: '15 mins',
-      capacity: 'Medium',
-      features: ['AC', 'GPS Tracking', 'Comfortable Seating', 'CNG Powered'],
-      color: 'bg-emerald-600',
-      icon: '🚌'
-    },
-    {
-      id: 'bus-5',
-      name: 'Metro Deluxe Bus',
-      type: 'Premium Service',
-      duration: '25 mins',
-      nextArrival: '6 mins',
-      capacity: 'Low',
-      features: ['Premium AC', 'GPS Tracking', 'WiFi', 'USB Charging', 'Luxury Seats'],
-      color: 'bg-purple-600',
-      icon: '🚐'
+const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOptionsProps) => {
+  const getBusData = () => {
+    if (busType === 'local' || busType === 'district') {
+      return [
+        {
+          id: 'bus-1',
+          name: 'City Ordinary',
+          type: 'Non-AC Regular',
+          duration: '45 mins',
+          nextArrival: '8 mins',
+          features: ['GPS Tracking', 'Low Floor Entry'],
+          color: 'bg-orange-500',
+          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png'
+        },
+        {
+          id: 'bus-2',
+          name: 'Metro Express (Non-AC)',
+          type: 'Express Service',
+          duration: '30 mins',
+          nextArrival: '12 mins',
+          features: ['GPS Tracking', 'Limited Stops', 'Electric Powered'],
+          color: 'bg-blue-500',
+          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png'
+        },
+        {
+          id: 'bus-3',
+          name: 'Metro Deluxe',
+          type: 'Eco-Friendly',
+          duration: '40 mins',
+          nextArrival: '5 mins',
+          features: ['GPS Tracking', 'Environment Friendly', 'Electric Powered'],
+          color: 'bg-green-500',
+          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png'
+        },
+        {
+          id: 'bus-4',
+          name: 'City Sheetal (air-conditioned)',
+          type: 'AC Comfort',
+          duration: '35 mins',
+          nextArrival: '15 mins',
+          features: ['AC', 'GPS Tracking', 'Comfortable Seating', 'Electric Powered'],
+          color: 'bg-emerald-600',
+          imageUrl: '/lovable-uploads/a64486c4-b418-450b-943b-1d7a775103bd.png'
+        },
+        {
+          id: 'bus-5',
+          name: 'Super-Luxury',
+          type: 'Premium Service',
+          duration: '25 mins',
+          nextArrival: '6 mins',
+          features: ['AC', 'GPS Tracking', 'USB Charging', 'Luxury Seats'],
+          color: 'bg-purple-600',
+          imageUrl: '/lovable-uploads/08de62b5-0d08-45c1-a0af-ef02bb9597c1.png'
+        }
+      ];
+    } else {
+      // State bus - keep original data
+      return [
+        {
+          id: 'bus-1',
+          name: 'Ordinary Bus',
+          type: 'Non-AC Regular',
+          duration: '45 mins',
+          nextArrival: '8 mins',
+          capacity: 'High',
+          features: ['GPS Tracking', 'Low Floor Entry'],
+          color: 'bg-orange-500',
+          icon: '🚌'
+        },
+        {
+          id: 'bus-2',
+          name: 'Metro Bus',
+          type: 'Express Service',
+          duration: '30 mins',
+          nextArrival: '12 mins',
+          capacity: 'Medium',
+          features: ['GPS Tracking', 'Limited Stops', 'Fast Transit'],
+          color: 'bg-blue-500',
+          icon: '🚍'
+        },
+        {
+          id: 'bus-3',
+          name: 'Green Non-AC Bus',
+          type: 'Eco-Friendly',
+          duration: '40 mins',
+          nextArrival: '5 mins',
+          capacity: 'High',
+          features: ['GPS Tracking', 'Environment Friendly', 'CNG Powered'],
+          color: 'bg-green-500',
+          icon: '🚐'
+        },
+        {
+          id: 'bus-4',
+          name: 'Green AC Bus',
+          type: 'AC Comfort',
+          duration: '35 mins',
+          nextArrival: '15 mins',
+          capacity: 'Medium',
+          features: ['AC', 'GPS Tracking', 'Comfortable Seating', 'CNG Powered'],
+          color: 'bg-emerald-600',
+          icon: '🚌'
+        },
+        {
+          id: 'bus-5',
+          name: 'Metro Deluxe Bus',
+          type: 'Premium Service',
+          duration: '25 mins',
+          nextArrival: '6 mins',
+          capacity: 'Low',
+          features: ['Premium AC', 'GPS Tracking', 'WiFi', 'USB Charging', 'Luxury Seats'],
+          color: 'bg-purple-600',
+          icon: '🚐'
+        }
+      ];
     }
-  ];
+  };
+
+  const buses = getBusData();
 
   const getCapacityColor = (capacity: string) => {
     switch (capacity) {
@@ -99,7 +159,17 @@ const BusOptions = ({ from, to, onBack, onSelectBus }: BusOptionsProps) => {
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start">
                   <div className="flex items-center space-x-3">
-                    <div className="text-3xl">{bus.icon}</div>
+                    <div className="w-16 h-16 flex items-center justify-center">
+                      {bus.imageUrl ? (
+                        <img 
+                          src={bus.imageUrl} 
+                          alt={bus.name}
+                          className="w-full h-full object-contain rounded"
+                        />
+                      ) : (
+                        <span className="text-3xl">{bus.icon}</span>
+                      )}
+                    </div>
                     <div>
                       <CardTitle className="text-lg font-bold text-gray-800">{bus.name}</CardTitle>
                       <p className="text-sm text-gray-600 font-medium">{bus.type}</p>
@@ -111,7 +181,7 @@ const BusOptions = ({ from, to, onBack, onSelectBus }: BusOptionsProps) => {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                <div className={`grid ${bus.capacity ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'} gap-4 mb-4`}>
                   <div className="flex items-center space-x-2">
                     <Clock className="h-4 w-4 text-gray-500" />
                     <div>
@@ -128,15 +198,16 @@ const BusOptions = ({ from, to, onBack, onSelectBus }: BusOptionsProps) => {
                     </div>
                   </div>
                   
-                  <div className="flex items-center space-x-2">
-                    <Users className="h-4 w-4 text-gray-500" />
-                    <div>
-                      <Badge className={`text-xs ${getCapacityColor(bus.capacity)}`}>
-                        {bus.capacity}
-                      </Badge>
-                      <div className="text-xs text-gray-500">Capacity</div>
+                  {bus.capacity && (
+                    <div className="flex items-center space-x-2">
+                      <div>
+                        <Badge className={`text-xs ${getCapacityColor(bus.capacity)}`}>
+                          {bus.capacity}
+                        </Badge>
+                        <div className="text-xs text-gray-500">Capacity</div>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   
                   <div className="flex items-center space-x-2">
                     <div className={`w-3 h-3 rounded-full ${bus.color}`}></div>

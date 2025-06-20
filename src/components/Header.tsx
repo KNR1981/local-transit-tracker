@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { MapPin, Menu, User, Route, HelpCircle, LogOut } from "lucide-react";
+import { Menu, User, Route, HelpCircle, LogOut } from "lucide-react";
 import { useState } from "react";
 import {
   DropdownMenu,
@@ -34,8 +34,12 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick }: HeaderP
             className={`flex items-center space-x-2 ${isAuthenticated ? 'cursor-pointer' : ''}`}
             onClick={handleLogoClick}
           >
-            <div className="bg-blue-600 p-2 rounded-lg">
-              <MapPin className="h-6 w-6 text-white" />
+            <div className="bg-white p-2 rounded-lg">
+              <img 
+                src="/lovable-uploads/c25c33f6-71c0-4b72-bb70-73d697dc99f9.png" 
+                alt="Gamyam Logo"
+                className="h-8 w-auto"
+              />
             </div>
             <h1 className="text-2xl font-bold text-gray-900">Gamyam</h1>
           </div>

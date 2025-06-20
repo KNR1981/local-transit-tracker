@@ -86,6 +86,7 @@ const Index = () => {
           <BusOptions
             from={routeData.from}
             to={routeData.to}
+            busType={selectedBusType}
             onBack={handleBackToRouteSelection}
             onSelectBus={handleBusSelect}
           />
