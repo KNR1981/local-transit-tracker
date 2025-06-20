@@ -47,10 +47,11 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
       <div 
         className="container mx-auto px-4 py-16 relative"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/lovable-uploads/6e3d1276-788a-4f36-b09e-8f3cff2ef44d.png')`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/lovable-uploads/eb128bba-7d30-499e-9ec7-09a3f77b504d.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: 'black'
         }}
       >
         <div className="text-center max-w-4xl mx-auto">

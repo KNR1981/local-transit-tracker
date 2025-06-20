@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,14 +13,13 @@ interface DashboardProps {
 
 const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
   const plugin = useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: true })
+    Autoplay({ delay: 2000, stopOnInteraction: true })
   );
 
   const busTypes = [
     {
       id: 'local' as const,
       title: 'Local City Bus',
-      description: 'Comprehensive city transportation network covering all major routes within Hyderabad metropolitan area',
       icon: MapPin,
       color: 'bg-emerald-100 text-emerald-700',
       badge: 'Most Popular',
@@ -30,7 +30,6 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
     {
       id: 'district' as const,
       title: 'District Express',
-      description: 'Premium inter-district connectivity with enhanced comfort and faster transit times',
       icon: Clock,
       color: 'bg-blue-100 text-blue-700',
       badge: 'Express Service',
@@ -41,7 +40,6 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
     {
       id: 'state' as const,
       title: 'State Highway',
-      description: 'Long-distance interstate transportation with superior comfort and reliability',
       icon: Users,
       color: 'bg-purple-100 text-purple-700',
       badge: 'Premium',
@@ -94,9 +92,6 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
                     />
                   </div>
                   <CardTitle className="text-xl font-bold">{busType.title}</CardTitle>
-                  <CardDescription className="text-gray-600 text-base">
-                    {busType.description}
-                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
