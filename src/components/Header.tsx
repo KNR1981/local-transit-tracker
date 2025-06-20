@@ -1,7 +1,14 @@
 
 import { Button } from "@/components/ui/button";
-import { MapPin, Menu } from "lucide-react";
+import { MapPin, Menu, User, Route, HelpCircle, LogOut } from "lucide-react";
 import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface HeaderProps {
   onAuthClick: (type: 'login' | 'signup') => void;
@@ -20,14 +27,39 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout }: HeaderProps) => {
             <div className="bg-blue-600 p-2 rounded-lg">
               <MapPin className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">BusTracker</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Gamyam</h1>
           </div>
           
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
-              <Button variant="outline" onClick={onLogout}>
-                Logout
-              </Button>
+              <>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <Menu className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 bg-white border shadow-lg">
+                    <DropdownMenuItem className="cursor-pointer">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Route className="mr-2 h-4 w-4" />
+                      <span>Route</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <HelpCircle className="mr-2 h-4 w-4" />
+                      <span>Help Center</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="cursor-pointer" onClick={onLogout}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Logout</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
             ) : (
               <>
                 <Button variant="outline" onClick={() => onAuthClick('login')}>
@@ -55,9 +87,24 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout }: HeaderProps) => {
           <div className="md:hidden pb-4">
             <div className="flex flex-col space-y-2">
               {isAuthenticated ? (
-                <Button variant="outline" onClick={onLogout}>
-                  Logout
-                </Button>
+                <>
+                  <Button variant="ghost" className="justify-start">
+                    <User className="mr-2 h-4 w-4" />
+                    Profile
+                  </Button>
+                  <Button variant="ghost" className="justify-start">
+                    <Route className="mr-2 h-4 w-4" />
+                    Route
+                  </Button>
+                  <Button variant="ghost" className="justify-start">
+                    <HelpCircle className="mr-2 h-4 w-4" />
+                    Help Center
+                  </Button>
+                  <Button variant="outline" onClick={onLogout} className="justify-start">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
+                  </Button>
+                </>
               ) : (
                 <>
                   <Button variant="outline" onClick={() => onAuthClick('login')}>

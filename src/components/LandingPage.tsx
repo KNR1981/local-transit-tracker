@@ -54,13 +54,13 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
           </div>
           
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Track Your Bus
-            <span className="text-blue-600"> Live</span>
+            Track Your Bus with
+            <span className="text-blue-600"> Gamyam</span>
           </h1>
           
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Never miss your bus again. Track government buses in real-time, 
-            get accurate arrival predictions, and plan your journey with confidence.
+            get accurate arrival predictions, and plan your journey with confidence using Gamyam.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
@@ -105,7 +105,7 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Why Choose BusTracker?
+              Why Choose Gamyam?
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Our comprehensive bus tracking solution provides everything you need 
@@ -136,10 +136,10 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
       <div className="bg-gradient-to-r from-blue-600 to-green-600 py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Start Tracking?
+            Ready to Start Your Journey?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of commuters who trust BusTracker for their daily travel needs.
+            Join thousands of commuters who trust Gamyam for their daily travel needs.
           </p>
           <Button 
             size="lg" 
@@ -147,7 +147,7 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
             className="text-lg px-8 py-3"
             onClick={() => onAuthClick('signup')}
           >
-            Start Tracking Now
+            Start Your Journey Now
           </Button>
         </div>
       </div>

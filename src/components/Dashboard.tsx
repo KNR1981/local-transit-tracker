@@ -12,30 +12,33 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
   const busTypes = [
     {
       id: 'local' as const,
-      title: 'Local Bus',
-      description: 'City and local area buses',
+      title: 'Local City Bus',
+      description: 'Comprehensive city transportation network covering all major routes within Hyderabad metropolitan area',
       icon: MapPin,
-      color: 'bg-green-100 text-green-700',
+      color: 'bg-emerald-100 text-emerald-700',
       badge: 'Most Popular',
-      badgeColor: 'bg-green-500'
+      badgeColor: 'bg-emerald-500',
+      features: ['Real-time tracking', 'Multiple payment options', 'Accessible vehicles']
     },
     {
       id: 'district' as const,
-      title: 'District Bus',
-      description: 'Inter-district transportation',
+      title: 'District Express',
+      description: 'Premium inter-district connectivity with enhanced comfort and faster transit times',
       icon: Clock,
       color: 'bg-blue-100 text-blue-700',
-      badge: 'Reliable',
-      badgeColor: 'bg-blue-500'
+      badge: 'Express Service',
+      badgeColor: 'bg-blue-500',
+      features: ['Limited stops', 'AC comfort', 'Onboard amenities']
     },
     {
       id: 'state' as const,
-      title: 'State Bus',
-      description: 'Interstate bus services',
+      title: 'State Highway',
+      description: 'Long-distance interstate transportation with superior comfort and reliability',
       icon: Users,
       color: 'bg-purple-100 text-purple-700',
-      badge: 'Long Distance',
-      badgeColor: 'bg-purple-500'
+      badge: 'Premium',
+      badgeColor: 'bg-purple-500',
+      features: ['Luxury seating', 'Entertainment system', 'Refreshments']
     }
   ];
 
@@ -44,40 +47,48 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Choose Your Bus Service
+            Choose Your Transportation Service
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Select the type of bus service you want to track. Get real-time updates 
-            and plan your journey with confidence.
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Experience seamless public transportation with Gamyam. Select your preferred service type 
+            and enjoy real-time tracking, accurate schedules, and comfortable journeys.
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {busTypes.map((busType) => {
             const IconComponent = busType.icon;
             return (
               <Card 
                 key={busType.id} 
-                className="hover:shadow-lg transition-shadow cursor-pointer border-2 hover:border-blue-200"
+                className="hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-blue-200 relative overflow-hidden"
                 onClick={() => onBusTypeSelect(busType.id)}
               >
-                <CardHeader className="text-center">
-                  <div className="relative">
-                    <div className={`w-16 h-16 ${busType.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                      <IconComponent className="h-8 w-8" />
-                    </div>
-                    <Badge className={`absolute -top-2 -right-2 ${busType.badgeColor} text-white`}>
-                      {busType.badge}
-                    </Badge>
+                <div className="absolute top-0 right-0">
+                  <Badge className={`${busType.badgeColor} text-white rounded-bl-lg rounded-tr-lg px-3 py-1`}>
+                    {busType.badge}
+                  </Badge>
+                </div>
+                <CardHeader className="text-center pt-8">
+                  <div className={`w-20 h-20 ${busType.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                    <IconComponent className="h-10 w-10" />
                   </div>
-                  <CardTitle className="text-xl">{busType.title}</CardTitle>
-                  <CardDescription className="text-gray-600">
+                  <CardTitle className="text-xl font-bold">{busType.title}</CardTitle>
+                  <CardDescription className="text-gray-600 text-base">
                     {busType.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    {busType.features.map((feature, index) => (
+                      <div key={index} className="flex items-center text-sm text-gray-600">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
                   <Button 
-                    className="w-full"
+                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700"
                     onClick={(e) => {
                       e.stopPropagation();
                       onBusTypeSelect(busType.id);
@@ -91,24 +102,24 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
           })}
         </div>
         
-        <div className="mt-12 bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-lg font-semibold mb-4">Quick Stats</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">250+</div>
-              <div className="text-sm text-gray-600">Active Buses</div>
+        <div className="mt-16 bg-white rounded-xl shadow-lg p-8">
+          <h3 className="text-2xl font-bold text-center mb-8 text-gray-800">Service Statistics</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <div className="text-3xl font-bold text-blue-600 mb-2">350+</div>
+              <div className="text-sm text-gray-600 font-medium">Active Buses</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">50+</div>
-              <div className="text-sm text-gray-600">Routes</div>
+            <div className="text-center p-4 bg-green-50 rounded-lg">
+              <div className="text-3xl font-bold text-green-600 mb-2">75+</div>
+              <div className="text-sm text-gray-600 font-medium">Routes Covered</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">1000+</div>
-              <div className="text-sm text-gray-600">Daily Users</div>
+            <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <div className="text-3xl font-bold text-purple-600 mb-2">5000+</div>
+              <div className="text-sm text-gray-600 font-medium">Daily Passengers</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600">98%</div>
-              <div className="text-sm text-gray-600">Accuracy</div>
+            <div className="text-center p-4 bg-orange-50 rounded-lg">
+              <div className="text-3xl font-bold text-orange-600 mb-2">99%</div>
+              <div className="text-sm text-gray-600 font-medium">Reliability</div>
             </div>
           </div>
         </div>

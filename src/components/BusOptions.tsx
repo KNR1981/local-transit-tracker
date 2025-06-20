@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Clock, Users, Zap, MapPin } from "lucide-react";
+import { ArrowLeft, Clock, Users, Zap, MapPin, Bus } from "lucide-react";
 
 interface BusOptionsProps {
   from: string;
@@ -15,58 +15,58 @@ const BusOptions = ({ from, to, onBack, onSelectBus }: BusOptionsProps) => {
   const buses = [
     {
       id: 'bus-1',
-      name: 'Express Route 101',
-      type: 'AC Express',
-      duration: '25 mins',
-      nextArrival: '5 mins',
-      capacity: 'Medium',
-      price: '₹15',
-      features: ['AC', 'GPS Tracking', 'WiFi'],
-      color: 'bg-green-500'
+      name: 'Ordinary Bus',
+      type: 'Non-AC Regular',
+      duration: '45 mins',
+      nextArrival: '8 mins',
+      capacity: 'High',
+      features: ['GPS Tracking', 'Low Floor Entry'],
+      color: 'bg-orange-500',
+      icon: '🚌'
     },
     {
       id: 'bus-2',
-      name: 'City Connect 205',
-      type: 'Regular',
-      duration: '35 mins',
+      name: 'Metro Bus',
+      type: 'Express Service',
+      duration: '30 mins',
       nextArrival: '12 mins',
-      capacity: 'High',
-      price: '₹10',
-      features: ['GPS Tracking', 'Low Floor'],
-      color: 'bg-blue-500'
+      capacity: 'Medium',
+      features: ['GPS Tracking', 'Limited Stops', 'Fast Transit'],
+      color: 'bg-blue-500',
+      icon: '🚍'
     },
     {
       id: 'bus-3',
-      name: 'Metro Link 308',
-      type: 'Premium',
-      duration: '20 mins',
-      nextArrival: '8 mins',
-      capacity: 'Low',
-      price: '₹20',
-      features: ['AC', 'GPS Tracking', 'WiFi', 'USB Charging'],
-      color: 'bg-purple-500'
+      name: 'Green Non-AC Bus',
+      type: 'Eco-Friendly',
+      duration: '40 mins',
+      nextArrival: '5 mins',
+      capacity: 'High',
+      features: ['GPS Tracking', 'Environment Friendly', 'CNG Powered'],
+      color: 'bg-green-500',
+      icon: '🚐'
     },
     {
       id: 'bus-4',
-      name: 'Local Line 112',
-      type: 'Regular',
-      duration: '40 mins',
+      name: 'Green AC Bus',
+      type: 'AC Comfort',
+      duration: '35 mins',
       nextArrival: '15 mins',
-      capacity: 'High',
-      price: '₹8',
-      features: ['GPS Tracking'],
-      color: 'bg-orange-500'
+      capacity: 'Medium',
+      features: ['AC', 'GPS Tracking', 'Comfortable Seating', 'CNG Powered'],
+      color: 'bg-emerald-600',
+      icon: '🚌'
     },
     {
       id: 'bus-5',
-      name: 'Rapid Transit 401',
-      type: 'Express',
-      duration: '28 mins',
+      name: 'Metro Deluxe Bus',
+      type: 'Premium Service',
+      duration: '25 mins',
       nextArrival: '6 mins',
-      capacity: 'Medium',
-      price: '₹12',
-      features: ['GPS Tracking', 'Low Floor'],
-      color: 'bg-red-500'
+      capacity: 'Low',
+      features: ['Premium AC', 'GPS Tracking', 'WiFi', 'USB Charging', 'Luxury Seats'],
+      color: 'bg-purple-600',
+      icon: '🚐'
     }
   ];
 
@@ -88,23 +88,25 @@ const BusOptions = ({ from, to, onBack, onSelectBus }: BusOptionsProps) => {
             Back
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Available Buses</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Choose Your Bus</h1>
             <p className="text-gray-600">{from} → {to}</p>
           </div>
         </div>
 
         <div className="grid gap-4">
           {buses.map((bus) => (
-            <Card key={bus.id} className="hover:shadow-lg transition-shadow">
+            <Card key={bus.id} className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-blue-500">
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start">
-                  <div>
-                    <CardTitle className="text-lg">{bus.name}</CardTitle>
-                    <p className="text-sm text-gray-600">{bus.type}</p>
+                  <div className="flex items-center space-x-3">
+                    <div className="text-3xl">{bus.icon}</div>
+                    <div>
+                      <CardTitle className="text-lg font-bold text-gray-800">{bus.name}</CardTitle>
+                      <p className="text-sm text-gray-600 font-medium">{bus.type}</p>
+                    </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-green-600">{bus.price}</div>
-                    <div className="text-sm text-gray-600">per person</div>
+                    <Badge className="bg-green-500 text-white mb-1">Available</Badge>
                   </div>
                 </div>
               </CardHeader>
@@ -147,14 +149,14 @@ const BusOptions = ({ from, to, onBack, onSelectBus }: BusOptionsProps) => {
                 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {bus.features.map((feature, index) => (
-                    <Badge key={index} variant="secondary" className="text-xs">
+                    <Badge key={index} variant="secondary" className="text-xs bg-blue-50 text-blue-700">
                       {feature}
                     </Badge>
                   ))}
                 </div>
                 
                 <Button 
-                  className="w-full"
+                  className="w-full bg-blue-600 hover:bg-blue-700"
                   onClick={() => onSelectBus(bus.id)}
                 >
                   <MapPin className="h-4 w-4 mr-2" />
