@@ -1,15 +1,20 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { MapPin, Clock, Users } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 interface DashboardProps {
   onBusTypeSelect: (type: 'local' | 'district' | 'state') => void;
 }
 
 const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
+  const plugin = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  );
+
   const busTypes = [
     {
       id: 'local' as const,
@@ -120,7 +125,11 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
         <div className="mt-16 bg-white rounded-xl shadow-lg p-8">
           <h3 className="text-2xl font-bold text-center mb-8 text-gray-800">Service Statistics</h3>
           <div className="relative">
-            <Carousel className="w-full max-w-4xl mx-auto" opts={{ align: "start", loop: true }}>
+            <Carousel 
+              className="w-full max-w-4xl mx-auto" 
+              opts={{ align: "start", loop: true }}
+              plugins={[plugin.current]}
+            >
               <CarouselContent>
                 {statistics.map((stat, index) => (
                   <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
