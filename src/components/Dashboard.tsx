@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { MapPin, Clock, Users } from "lucide-react";
 
 interface DashboardProps {
@@ -18,7 +19,8 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
       color: 'bg-emerald-100 text-emerald-700',
       badge: 'Most Popular',
       badgeColor: 'bg-emerald-500',
-      features: ['Real-time tracking', 'Multiple payment options', 'Accessible vehicles']
+      features: ['Real-time tracking', 'Multiple payment options', 'Accessible vehicles'],
+      logoUrl: '/lovable-uploads/44e93a91-29a8-4113-90bd-7232b7808876.png'
     },
     {
       id: 'district' as const,
@@ -28,7 +30,8 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
       color: 'bg-blue-100 text-blue-700',
       badge: 'Express Service',
       badgeColor: 'bg-blue-500',
-      features: ['Limited stops', 'AC comfort', 'Onboard amenities']
+      features: ['Limited stops', 'AC comfort', 'Real-time tracking'],
+      logoUrl: '/lovable-uploads/b7f6924a-8b01-4130-aba6-eca03c6eb7d8.png'
     },
     {
       id: 'state' as const,
@@ -38,8 +41,16 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
       color: 'bg-purple-100 text-purple-700',
       badge: 'Premium',
       badgeColor: 'bg-purple-500',
-      features: ['Luxury seating', 'Entertainment system', 'Refreshments']
+      features: ['Luxury seating', 'Entertainment system', 'Real-time tracking'],
+      logoUrl: '/lovable-uploads/d95a9ac1-b895-456d-a0dd-5daf6f1fb5f9.png'
     }
+  ];
+
+  const statistics = [
+    { value: '9000+', label: 'Active Buses', color: 'bg-blue-50 text-blue-600' },
+    { value: '36000+', label: 'Routes Covered', color: 'bg-green-50 text-green-600' },
+    { value: '8 Million', label: 'Daily Passengers', color: 'bg-purple-50 text-purple-600' },
+    { value: '45000+', label: 'Employees', color: 'bg-orange-50 text-orange-600' }
   ];
 
   return (
@@ -70,8 +81,12 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
                   </Badge>
                 </div>
                 <CardHeader className="text-center pt-8">
-                  <div className={`w-20 h-20 ${busType.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                    <IconComponent className="h-10 w-10" />
+                  <div className="w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                    <img 
+                      src={busType.logoUrl} 
+                      alt={`${busType.title} logo`}
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                   <CardTitle className="text-xl font-bold">{busType.title}</CardTitle>
                   <CardDescription className="text-gray-600 text-base">
@@ -104,23 +119,23 @@ const Dashboard = ({ onBusTypeSelect }: DashboardProps) => {
         
         <div className="mt-16 bg-white rounded-xl shadow-lg p-8">
           <h3 className="text-2xl font-bold text-center mb-8 text-gray-800">Service Statistics</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <div className="text-3xl font-bold text-blue-600 mb-2">350+</div>
-              <div className="text-sm text-gray-600 font-medium">Active Buses</div>
-            </div>
-            <div className="text-center p-4 bg-green-50 rounded-lg">
-              <div className="text-3xl font-bold text-green-600 mb-2">75+</div>
-              <div className="text-sm text-gray-600 font-medium">Routes Covered</div>
-            </div>
-            <div className="text-center p-4 bg-purple-50 rounded-lg">
-              <div className="text-3xl font-bold text-purple-600 mb-2">5000+</div>
-              <div className="text-sm text-gray-600 font-medium">Daily Passengers</div>
-            </div>
-            <div className="text-center p-4 bg-orange-50 rounded-lg">
-              <div className="text-3xl font-bold text-orange-600 mb-2">99%</div>
-              <div className="text-sm text-gray-600 font-medium">Reliability</div>
-            </div>
+          <div className="relative">
+            <Carousel className="w-full max-w-4xl mx-auto" opts={{ align: "start", loop: true }}>
+              <CarouselContent>
+                {statistics.map((stat, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
+                    <div className="p-1">
+                      <div className={`text-center p-6 ${stat.color} rounded-lg h-full`}>
+                        <div className="text-3xl font-bold mb-2">{stat.value}</div>
+                        <div className="text-sm font-medium">{stat.label}</div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
           </div>
         </div>
       </div>

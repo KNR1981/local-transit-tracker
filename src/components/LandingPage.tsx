@@ -43,22 +43,30 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
-      {/* Hero Section */}
-      <div className="container mx-auto px-4 py-16">
+      {/* Hero Section with Background Image */}
+      <div 
+        className="container mx-auto px-4 py-16 relative"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/lovable-uploads/6e3d1276-788a-4f36-b09e-8f3cff2ef44d.png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
         <div className="text-center max-w-4xl mx-auto">
           <div className="mb-8">
-            <div className="inline-flex items-center space-x-2 bg-blue-100 px-4 py-2 rounded-full mb-6">
+            <div className="inline-flex items-center space-x-2 bg-blue-100 bg-opacity-90 px-4 py-2 rounded-full mb-6">
               <MapPin className="h-5 w-5 text-blue-600" />
               <span className="text-blue-800 font-medium">Government Bus Tracking</span>
             </div>
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
             Track Your Bus with
-            <span className="text-blue-600"> Gamyam</span>
+            <span className="text-yellow-400"> Gamyam</span>
           </h1>
           
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
             Never miss your bus again. Track government buses in real-time, 
             get accurate arrival predictions, and plan your journey with confidence using Gamyam.
           </p>
@@ -74,14 +82,14 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="text-lg px-8 py-3"
+              className="text-lg px-8 py-3 bg-white text-gray-900 hover:bg-gray-100"
               onClick={() => onAuthClick('login')}
             >
               Sign In
             </Button>
           </div>
           
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-3xl mx-auto">
+          <div className="bg-white bg-opacity-95 rounded-2xl shadow-xl p-8 max-w-3xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               <div>
                 <div className="text-3xl font-bold text-blue-600">250+</div>
