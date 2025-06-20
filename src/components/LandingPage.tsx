@@ -44,15 +44,18 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
       {/* Hero Section with Background Image */}
       <div 
-        className="container mx-auto px-4 py-16 relative"
+        className="min-h-screen container mx-auto px-4 py-16 relative"
         style={{
           backgroundImage: `url('/lovable-uploads/eb128bba-7d30-499e-9ec7-09a3f77b504d.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          backgroundRepeat: 'no-repeat',
+          width: '100vw',
+          marginLeft: 'calc(-50vw + 50%)',
+          marginRight: 'calc(-50vw + 50%)'
         }}
       >
-        <div className="text-center max-w-4xl mx-auto">
+        <div className="text-center max-w-4xl mx-auto relative z-10">
           <div className="mb-8">
             <div className="inline-flex items-center space-x-2 bg-blue-100 bg-opacity-90 px-4 py-2 rounded-full mb-6">
               <MapPin className="h-5 w-5 text-blue-600" />
