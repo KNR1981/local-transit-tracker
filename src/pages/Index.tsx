@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Header from "@/components/Header";
 import LandingPage from "@/components/LandingPage";
@@ -6,10 +7,12 @@ import Dashboard from "@/components/Dashboard";
 import RouteSelection from "@/components/RouteSelection";
 import BusOptions from "@/components/BusOptions";
 import BusMap from "@/components/BusMap";
+import Profile from "@/components/Profile";
+import HelpCenter from "@/components/HelpCenter";
 
 type AuthType = 'login' | 'signup';
 type BusType = 'local' | 'district' | 'state';
-type AppView = 'landing' | 'dashboard' | 'route-selection' | 'bus-options' | 'bus-map';
+type AppView = 'landing' | 'dashboard' | 'route-selection' | 'bus-options' | 'bus-map' | 'profile' | 'help';
 
 const Index = () => {
   const [currentView, setCurrentView] = useState<AppView>('landing');
@@ -38,6 +41,14 @@ const Index = () => {
     if (isAuthenticated) {
       setCurrentView('dashboard');
     }
+  };
+
+  const handleProfileClick = () => {
+    setCurrentView('profile');
+  };
+
+  const handleHelpClick = () => {
+    setCurrentView('help');
   };
 
   const handleBusTypeSelect = (type: BusType) => {
@@ -100,6 +111,10 @@ const Index = () => {
             onBack={handleBackToBusOptions}
           />
         );
+      case 'profile':
+        return <Profile onBack={handleBackToDashboard} />;
+      case 'help':
+        return <HelpCenter onBack={handleBackToDashboard} />;
       default:
         return <LandingPage onAuthClick={handleAuthClick} />;
     }
@@ -113,6 +128,8 @@ const Index = () => {
           isAuthenticated={isAuthenticated}
           onLogout={handleLogout}
           onLogoClick={handleLogoClick}
+          onProfileClick={handleProfileClick}
+          onHelpClick={handleHelpClick}
         />
       )}
       

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, Zap, MapPin } from "lucide-react";
+import { calculateFare } from "@/utils/fareCalculator";
 
 interface BusOptionsProps {
   from: string;
@@ -15,7 +16,7 @@ interface BusOptionsProps {
 const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOptionsProps) => {
   const getBusData = () => {
     if (busType === 'local' || busType === 'district') {
-      return [
+      const buses = [
         {
           id: 'bus-1',
           name: 'City Ordinary',
@@ -24,8 +25,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '8 mins',
           features: ['GPS Tracking', 'Low Floor Entry'],
           color: 'bg-orange-500',
-          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png',
-          fare: '₹10 - ₹15'
+          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png'
         },
         {
           id: 'bus-2',
@@ -35,8 +35,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '12 mins',
           features: ['GPS Tracking', 'Limited Stops', 'Electric Powered'],
           color: 'bg-blue-500',
-          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png',
-          fare: '₹10 - ₹20'
+          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png'
         },
         {
           id: 'bus-3',
@@ -46,8 +45,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '5 mins',
           features: ['GPS Tracking', 'Environment Friendly', 'Electric Powered'],
           color: 'bg-green-500',
-          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png',
-          fare: '₹15 - ₹25'
+          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png'
         },
         {
           id: 'bus-4',
@@ -57,8 +55,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '15 mins',
           features: ['AC', 'GPS Tracking', 'Comfortable Seating', 'Electric Powered'],
           color: 'bg-emerald-600',
-          imageUrl: '/lovable-uploads/a64486c4-b418-450b-943b-1d7a775103bd.png',
-          fare: '₹15 - ₹20'
+          imageUrl: '/lovable-uploads/a64486c4-b418-450b-943b-1d7a775103bd.png'
         },
         {
           id: 'bus-5',
@@ -68,13 +65,16 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '6 mins',
           features: ['AC', 'GPS Tracking', 'USB Charging', 'Luxury Seats'],
           color: 'bg-purple-600',
-          imageUrl: '/lovable-uploads/08de62b5-0d08-45c1-a0af-ef02bb9597c1.png',
-          fare: '₹40 - ₹70+'
+          imageUrl: '/lovable-uploads/08de62b5-0d08-45c1-a0af-ef02bb9597c1.png'
         }
       ];
+
+      return buses.map(bus => {
+        const { fare, distance } = calculateFare(busType, from, to, bus.name);
+        return { ...bus, fare, distance };
+      });
     } else {
-      // State bus - updated with new requirements
-      return [
+      const buses = [
         {
           id: 'bus-1',
           name: 'Ordinary Bus',
@@ -83,8 +83,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '8 mins',
           features: ['GPS Tracking', 'Low Floor Entry'],
           color: 'bg-orange-500',
-          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png',
-          fare: '₹231 - ₹674'
+          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png'
         },
         {
           id: 'bus-2',
@@ -94,8 +93,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '12 mins',
           features: ['GPS Tracking', 'Limited Stops', 'Fast Transit'],
           color: 'bg-blue-500',
-          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png',
-          fare: '₹273 - ₹471'
+          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png'
         },
         {
           id: 'bus-3',
@@ -105,8 +103,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '5 mins',
           features: ['AC', 'GPS Tracking', 'Environment Friendly'],
           color: 'bg-green-500',
-          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png',
-          fare: '₹278 - ₹369'
+          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png'
         },
         {
           id: 'bus-4',
@@ -116,8 +113,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '15 mins',
           features: ['AC', 'GPS Tracking', 'Comfortable Seating'],
           color: 'bg-emerald-600',
-          imageUrl: '/lovable-uploads/88c09ca5-5e41-4191-8e36-b066abe346f9.png',
-          fare: '₹231 - ₹674'
+          imageUrl: '/lovable-uploads/88c09ca5-5e41-4191-8e36-b066abe346f9.png'
         },
         {
           id: 'bus-5',
@@ -127,10 +123,14 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '6 mins',
           features: ['AC', 'GPS Tracking', 'Luxury Seats'],
           color: 'bg-purple-600',
-          imageUrl: '/lovable-uploads/6cf0f2ac-a5c4-48be-b845-d36634c1d4df.png',
-          fare: '₹231 - ₹674'
+          imageUrl: '/lovable-uploads/6cf0f2ac-a5c4-48be-b845-d36634c1d4df.png'
         }
       ];
+
+      return buses.map(bus => {
+        const { fare, distance } = calculateFare(busType, from, to, bus.name);
+        return { ...bus, fare, distance };
+      });
     }
   };
 
@@ -170,6 +170,7 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
                     <div>
                       <CardTitle className="text-lg font-bold text-gray-800">{bus.name}</CardTitle>
                       <p className="text-sm text-gray-600 font-medium">{bus.type}</p>
+                      <p className="text-xs text-gray-500">Distance: {bus.distance} km</p>
                     </div>
                   </div>
                   <div className="text-right">

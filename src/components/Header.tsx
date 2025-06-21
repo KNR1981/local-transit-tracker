@@ -15,9 +15,11 @@ interface HeaderProps {
   isAuthenticated?: boolean;
   onLogout?: () => void;
   onLogoClick?: () => void;
+  onProfileClick?: () => void;
+  onHelpClick?: () => void;
 }
 
-const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick }: HeaderProps) => {
+const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick, onProfileClick, onHelpClick }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogoClick = () => {
@@ -54,11 +56,11 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick }: HeaderP
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56 bg-white border shadow-lg">
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem className="cursor-pointer" onClick={onProfileClick}>
                       <User className="mr-2 h-4 w-4" />
                       <span>Profile</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
+                    <DropdownMenuItem className="cursor-pointer" onClick={onHelpClick}>
                       <HelpCircle className="mr-2 h-4 w-4" />
                       <span>Help Center</span>
                     </DropdownMenuItem>
@@ -98,11 +100,11 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick }: HeaderP
             <div className="flex flex-col space-y-2">
               {isAuthenticated ? (
                 <>
-                  <Button variant="ghost" className="justify-start">
+                  <Button variant="ghost" className="justify-start" onClick={onProfileClick}>
                     <User className="mr-2 h-4 w-4" />
                     Profile
                   </Button>
-                  <Button variant="ghost" className="justify-start">
+                  <Button variant="ghost" className="justify-start" onClick={onHelpClick}>
                     <HelpCircle className="mr-2 h-4 w-4" />
                     Help Center
                   </Button>
