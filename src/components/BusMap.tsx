@@ -4,8 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, MapPin, Clock, Users, Phone, Navigation, Zap } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+
+// Import leaflet dynamically to avoid SSR issues
+let L: any = null;
 
 interface BusMapProps {
   busId: string;
@@ -16,16 +17,17 @@ interface BusMapProps {
 
 const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<L.Map | null>(null);
-  const busMarkerRef = useRef<L.Marker | null>(null);
-  const userMarkerRef = useRef<L.Marker | null>(null);
-  const routeLineRef = useRef<L.Polyline | null>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const busMarkerRef = useRef<any>(null);
+  const userMarkerRef = useRef<any>(null);
+  const routeLineRef = useRef<any>(null);
   
   const [busLocation, setBusLocation] = useState({ lat: 17.3850, lng: 78.4867 });
   const [userLocation] = useState({ lat: 17.3950, lng: 78.4767 });
   const [destinationLocation] = useState({ lat: 17.3750, lng: 78.4967 });
   const [eta, setEta] = useState('12 mins');
   const [traffic, setTraffic] = useState('Moderate');
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   // Mock bus data with pricing
   const busData = {
@@ -42,9 +44,29 @@ const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
     logo: '🚐'
   };
 
+  // Load Leaflet dynamically
+  useEffect(() => {
+    const loadLeaflet = async () => {
+      try {
+        // Import leaflet dynamically
+        const leafletModule = await import('leaflet');
+        L = leafletModule.default;
+        
+        // Import CSS
+        await import('leaflet/dist/leaflet.css');
+        
+        setMapLoaded(true);
+      } catch (error) {
+        console.error('Failed to load Leaflet:', error);
+      }
+    };
+
+    loadLeaflet();
+  }, []);
+
   // Initialize map
   useEffect(() => {
-    if (!mapRef.current) return;
+    if (!mapRef.current || !L || !mapLoaded) return;
 
     // Create map instance
     const map = L.map(mapRef.current).setView([busLocation.lat, busLocation.lng], 13);
@@ -99,7 +121,7 @@ const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
       [destinationLocation.lat, destinationLocation.lng]
     ];
 
-    const routeLine = L.polyline(routePoints as L.LatLngExpression[], {
+    const routeLine = L.polyline(routePoints as any, {
       color: '#3b82f6',
       weight: 4,
       opacity: 0.7,
@@ -114,10 +136,12 @@ const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
     return () => {
       map.remove();
     };
-  }, []);
+  }, [mapLoaded, L]);
 
   // Simulate bus movement and traffic updates
   useEffect(() => {
+    if (!mapLoaded) return;
+    
     const interval = setInterval(() => {
       const newBusLocation = {
         lat: busLocation.lat + (Math.random() - 0.5) * 0.002,
@@ -137,7 +161,7 @@ const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
           [newBusLocation.lat, newBusLocation.lng],
           [destinationLocation.lat, destinationLocation.lng]
         ];
-        routeLineRef.current.setLatLngs(newRoutePoints as L.LatLngExpression[]);
+        routeLineRef.current.setLatLngs(newRoutePoints as any);
       }
       
       // Simulate dynamic ETA and traffic
@@ -149,7 +173,7 @@ const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [busLocation, userLocation, destinationLocation]);
+  }, [busLocation, userLocation, destinationLocation, mapLoaded]);
 
   const getTrafficColor = (traffic: string) => {
     switch (traffic) {
@@ -192,7 +216,13 @@ const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
       <div className="max-w-7xl mx-auto p-4 space-y-4">
         {/* Real Leaflet Map */}
         <Card className="h-96">
-          <div ref={mapRef} className="h-full w-full rounded-lg" />
+          <div ref={mapRef} className="h-full w-full rounded-lg">
+            {!mapLoaded && (
+              <div className="h-full w-full flex items-center justify-center bg-gray-100 rounded-lg">
+                <div className="text-gray-500">Loading map...</div>
+              </div>
+            )}
+          </div>
         </Card>
 
         <div className="grid md:grid-cols-3 gap-4">
