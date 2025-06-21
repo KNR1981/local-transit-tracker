@@ -3,7 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, MapPin, Clock, Users, Phone, Navigation, Zap } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 interface BusMapProps {
   busId: string;
@@ -13,7 +15,15 @@ interface BusMapProps {
 }
 
 const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<L.Map | null>(null);
+  const busMarkerRef = useRef<L.Marker | null>(null);
+  const userMarkerRef = useRef<L.Marker | null>(null);
+  const routeLineRef = useRef<L.Polyline | null>(null);
+  
   const [busLocation, setBusLocation] = useState({ lat: 17.3850, lng: 78.4867 });
+  const [userLocation] = useState({ lat: 17.3950, lng: 78.4767 });
+  const [destinationLocation] = useState({ lat: 17.3750, lng: 78.4967 });
   const [eta, setEta] = useState('12 mins');
   const [traffic, setTraffic] = useState('Moderate');
 
@@ -32,13 +42,103 @@ const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
     logo: '🚐'
   };
 
+  // Initialize map
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    // Create map instance
+    const map = L.map(mapRef.current).setView([busLocation.lat, busLocation.lng], 13);
+    mapInstanceRef.current = map;
+
+    // Add tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Custom icons
+    const busIcon = L.divIcon({
+      html: '<div style="background: #3b82f6; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">🚐</div>',
+      className: 'custom-div-icon',
+      iconSize: [30, 30],
+      iconAnchor: [15, 15]
+    });
+
+    const userIcon = L.divIcon({
+      html: '<div style="background: #10b981; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+      className: 'custom-div-icon',
+      iconSize: [20, 20],
+      iconAnchor: [10, 10]
+    });
+
+    const destinationIcon = L.divIcon({
+      html: '<div style="background: #ef4444; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+      className: 'custom-div-icon',
+      iconSize: [20, 20],
+      iconAnchor: [10, 10]
+    });
+
+    // Add markers
+    const busMarker = L.marker([busLocation.lat, busLocation.lng], { icon: busIcon })
+      .addTo(map)
+      .bindPopup(`<b>Bus Location</b><br/>${busData.name}<br/>Speed: ${busData.speed}`);
+    busMarkerRef.current = busMarker;
+
+    const userMarker = L.marker([userLocation.lat, userLocation.lng], { icon: userIcon })
+      .addTo(map)
+      .bindPopup('<b>Your Location</b>');
+    userMarkerRef.current = userMarker;
+
+    L.marker([destinationLocation.lat, destinationLocation.lng], { icon: destinationIcon })
+      .addTo(map)
+      .bindPopup(`<b>Destination</b><br/>${to}`);
+
+    // Add route line
+    const routePoints = [
+      [userLocation.lat, userLocation.lng],
+      [busLocation.lat, busLocation.lng],
+      [destinationLocation.lat, destinationLocation.lng]
+    ];
+
+    const routeLine = L.polyline(routePoints as L.LatLngExpression[], {
+      color: '#3b82f6',
+      weight: 4,
+      opacity: 0.7,
+      dashArray: '10, 5'
+    }).addTo(map);
+    routeLineRef.current = routeLine;
+
+    // Fit map to show all markers
+    const group = new L.FeatureGroup([busMarker, userMarker]);
+    map.fitBounds(group.getBounds().pad(0.1));
+
+    return () => {
+      map.remove();
+    };
+  }, []);
+
   // Simulate bus movement and traffic updates
   useEffect(() => {
     const interval = setInterval(() => {
-      setBusLocation(prev => ({
-        lat: prev.lat + (Math.random() - 0.5) * 0.002,
-        lng: prev.lng + (Math.random() - 0.5) * 0.002
-      }));
+      const newBusLocation = {
+        lat: busLocation.lat + (Math.random() - 0.5) * 0.002,
+        lng: busLocation.lng + (Math.random() - 0.5) * 0.002
+      };
+      setBusLocation(newBusLocation);
+      
+      // Update bus marker position
+      if (busMarkerRef.current) {
+        busMarkerRef.current.setLatLng([newBusLocation.lat, newBusLocation.lng]);
+      }
+
+      // Update route line
+      if (routeLineRef.current) {
+        const newRoutePoints = [
+          [userLocation.lat, userLocation.lng],
+          [newBusLocation.lat, newBusLocation.lng],
+          [destinationLocation.lat, destinationLocation.lng]
+        ];
+        routeLineRef.current.setLatLngs(newRoutePoints as L.LatLngExpression[]);
+      }
       
       // Simulate dynamic ETA and traffic
       const newEta = Math.max(1, Math.floor(Math.random() * 15) + 5);
@@ -49,7 +149,7 @@ const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [busLocation, userLocation, destinationLocation]);
 
   const getTrafficColor = (traffic: string) => {
     switch (traffic) {
@@ -90,57 +190,9 @@ const BusMap = ({ busId, from, to, onBack }: BusMapProps) => {
       </div>
 
       <div className="max-w-7xl mx-auto p-4 space-y-4">
-        {/* Enhanced Map Placeholder with Google Maps simulation */}
+        {/* Real Leaflet Map */}
         <Card className="h-96">
-          <div className="h-full bg-gradient-to-br from-blue-100 via-green-50 to-blue-100 rounded-lg flex items-center justify-center relative overflow-hidden">
-            {/* Grid pattern to simulate map */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="grid grid-cols-12 grid-rows-8 h-full w-full">
-                {Array.from({ length: 96 }).map((_, i) => (
-                  <div key={i} className="border border-gray-300"></div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Your location indicator */}
-            <div className="absolute top-1/4 left-1/3 flex flex-col items-center">
-              <div className="w-4 h-4 bg-blue-600 rounded-full border-2 border-white shadow-lg animate-pulse"></div>
-              <div className="text-xs bg-white px-2 py-1 rounded shadow mt-1">You</div>
-            </div>
-            
-            {/* Bus location indicator */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-              <div className="text-4xl animate-bounce">{busData.logo}</div>
-              <div className="text-xs bg-white px-2 py-1 rounded shadow mt-1">Bus Location</div>
-            </div>
-            
-            {/* Destination indicator */}
-            <div className="absolute bottom-1/4 right-1/3 flex flex-col items-center">
-              <div className="w-4 h-4 bg-red-600 rounded-full border-2 border-white shadow-lg"></div>
-              <div className="text-xs bg-white px-2 py-1 rounded shadow mt-1">Destination</div>
-            </div>
-            
-            {/* Route path simulation */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-3/4 h-1 bg-blue-400 opacity-60 rounded-full"></div>
-            </div>
-            
-            <div className="text-center z-10 bg-white bg-opacity-90 p-4 rounded-lg shadow-lg">
-              <Navigation className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <h3 className="text-lg font-bold text-gray-800 mb-2">Live GPS Tracking</h3>
-              <div className="flex items-center justify-center space-x-4 text-sm">
-                <span className="bg-blue-100 px-3 py-1 rounded-full">
-                  Speed: {busData.speed}
-                </span>
-                <span className="bg-green-100 px-3 py-1 rounded-full">
-                  ETA: {eta}
-                </span>
-                <Badge className={`${getTrafficColor(traffic)}`}>
-                  Traffic: {traffic}
-                </Badge>
-              </div>
-            </div>
-          </div>
+          <div ref={mapRef} className="h-full w-full rounded-lg" />
         </Card>
 
         <div className="grid md:grid-cols-3 gap-4">
