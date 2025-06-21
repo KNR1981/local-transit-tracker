@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -23,7 +24,8 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '8 mins',
           features: ['GPS Tracking', 'Low Floor Entry'],
           color: 'bg-orange-500',
-          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png'
+          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png',
+          fare: '₹10 - ₹15'
         },
         {
           id: 'bus-2',
@@ -33,7 +35,8 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '12 mins',
           features: ['GPS Tracking', 'Limited Stops', 'Electric Powered'],
           color: 'bg-blue-500',
-          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png'
+          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png',
+          fare: '₹10 - ₹20'
         },
         {
           id: 'bus-3',
@@ -43,17 +46,19 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '5 mins',
           features: ['GPS Tracking', 'Environment Friendly', 'Electric Powered'],
           color: 'bg-green-500',
-          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png'
+          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png',
+          fare: '₹15 - ₹25'
         },
         {
           id: 'bus-4',
-          name: 'City Sheetal (air-conditioned)',
+          name: 'Deluxe',
           type: 'AC Comfort',
           duration: '35 mins',
           nextArrival: '15 mins',
           features: ['AC', 'GPS Tracking', 'Comfortable Seating', 'Electric Powered'],
           color: 'bg-emerald-600',
-          imageUrl: '/lovable-uploads/a64486c4-b418-450b-943b-1d7a775103bd.png'
+          imageUrl: '/lovable-uploads/a64486c4-b418-450b-943b-1d7a775103bd.png',
+          fare: '₹15 - ₹20'
         },
         {
           id: 'bus-5',
@@ -63,11 +68,12 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           nextArrival: '6 mins',
           features: ['AC', 'GPS Tracking', 'USB Charging', 'Luxury Seats'],
           color: 'bg-purple-600',
-          imageUrl: '/lovable-uploads/08de62b5-0d08-45c1-a0af-ef02bb9597c1.png'
+          imageUrl: '/lovable-uploads/08de62b5-0d08-45c1-a0af-ef02bb9597c1.png',
+          fare: '₹40 - ₹70+'
         }
       ];
     } else {
-      // State bus - updated first three images to match local/district buses
+      // State bus - updated with new requirements
       return [
         {
           id: 'bus-1',
@@ -75,10 +81,10 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           type: 'Non-AC Regular',
           duration: '45 mins',
           nextArrival: '8 mins',
-          capacity: 'High',
           features: ['GPS Tracking', 'Low Floor Entry'],
           color: 'bg-orange-500',
-          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png'
+          imageUrl: '/lovable-uploads/ce1855e0-956e-4fdd-9fba-f1622541c23e.png',
+          fare: '₹231 - ₹674'
         },
         {
           id: 'bus-2',
@@ -86,43 +92,43 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
           type: 'Express Service',
           duration: '30 mins',
           nextArrival: '12 mins',
-          capacity: 'Medium',
           features: ['GPS Tracking', 'Limited Stops', 'Fast Transit'],
           color: 'bg-blue-500',
-          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png'
+          imageUrl: '/lovable-uploads/c043f54d-b3f2-4bb9-b3d8-178b875e4c15.png',
+          fare: '₹273 - ₹471'
         },
         {
           id: 'bus-3',
-          name: 'Green Non-AC Bus',
-          type: 'Eco-Friendly',
+          name: 'Green AC Bus',
+          type: 'AC Comfort',
           duration: '40 mins',
           nextArrival: '5 mins',
-          capacity: 'High',
-          features: ['GPS Tracking', 'Environment Friendly', 'CNG Powered'],
+          features: ['AC', 'GPS Tracking', 'Environment Friendly'],
           color: 'bg-green-500',
-          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png'
+          imageUrl: '/lovable-uploads/b3777b6f-3d50-4218-90b2-a6c4f53f147e.png',
+          fare: '₹278 - ₹369'
         },
         {
           id: 'bus-4',
-          name: 'Green AC Bus',
-          type: 'AC Comfort',
+          name: 'Vajra',
+          type: 'AC Premium',
           duration: '35 mins',
           nextArrival: '15 mins',
-          capacity: 'Medium',
-          features: ['AC', 'GPS Tracking', 'Comfortable Seating', 'CNG Powered'],
+          features: ['AC', 'GPS Tracking', 'Comfortable Seating'],
           color: 'bg-emerald-600',
-          icon: '🚌'
+          imageUrl: '/lovable-uploads/88c09ca5-5e41-4191-8e36-b066abe346f9.png',
+          fare: '₹231 - ₹674'
         },
         {
           id: 'bus-5',
-          name: 'Metro Deluxe Bus',
+          name: 'Garuda',
           type: 'Premium Service',
           duration: '25 mins',
           nextArrival: '6 mins',
-          capacity: 'Low',
-          features: ['Premium AC', 'GPS Tracking', 'WiFi', 'USB Charging', 'Luxury Seats'],
+          features: ['AC', 'GPS Tracking', 'Luxury Seats'],
           color: 'bg-purple-600',
-          icon: '🚐'
+          imageUrl: '/lovable-uploads/6cf0f2ac-a5c4-48be-b845-d36634c1d4df.png',
+          fare: '₹231 - ₹674'
         }
       ];
     }
@@ -130,13 +136,8 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
 
   const buses = getBusData();
 
-  const getCapacityColor = (capacity: string) => {
-    switch (capacity) {
-      case 'Low': return 'text-red-600 bg-red-100';
-      case 'Medium': return 'text-yellow-600 bg-yellow-100';
-      case 'High': return 'text-green-600 bg-green-100';
-      default: return 'text-gray-600 bg-gray-100';
-    }
+  const getButtonText = () => {
+    return busType === 'state' ? 'Book This Bus' : 'Track This Bus';
   };
 
   return (
@@ -160,15 +161,11 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
                 <div className="flex justify-between items-start">
                   <div className="flex items-center space-x-3">
                     <div className="w-16 h-16 flex items-center justify-center">
-                      {bus.imageUrl ? (
-                        <img 
-                          src={bus.imageUrl} 
-                          alt={bus.name}
-                          className="w-full h-full object-contain rounded"
-                        />
-                      ) : (
-                        <span className="text-3xl">{bus.icon}</span>
-                      )}
+                      <img 
+                        src={bus.imageUrl} 
+                        alt={bus.name}
+                        className="w-full h-full object-contain rounded"
+                      />
                     </div>
                     <div>
                       <CardTitle className="text-lg font-bold text-gray-800">{bus.name}</CardTitle>
@@ -177,11 +174,12 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
                   </div>
                   <div className="text-right">
                     <Badge className="bg-green-500 text-white mb-1">Available</Badge>
+                    <div className="text-lg font-bold text-green-600">{bus.fare}</div>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
-                <div className={`grid ${bus.capacity ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'} gap-4 mb-4`}>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
                   <div className="flex items-center space-x-2">
                     <Clock className="h-4 w-4 text-gray-500" />
                     <div>
@@ -197,17 +195,6 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
                       <div className="text-xs text-gray-500">Next Bus</div>
                     </div>
                   </div>
-                  
-                  {bus.capacity && (
-                    <div className="flex items-center space-x-2">
-                      <div>
-                        <Badge className={`text-xs ${getCapacityColor(bus.capacity)}`}>
-                          {bus.capacity}
-                        </Badge>
-                        <div className="text-xs text-gray-500">Capacity</div>
-                      </div>
-                    </div>
-                  )}
                   
                   <div className="flex items-center space-x-2">
                     <div className={`w-3 h-3 rounded-full ${bus.color}`}></div>
@@ -227,11 +214,11 @@ const BusOptions = ({ from, to, busType = 'local', onBack, onSelectBus }: BusOpt
                 </div>
                 
                 <Button 
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-sm py-2"
                   onClick={() => onSelectBus(bus.id)}
                 >
                   <MapPin className="h-4 w-4 mr-2" />
-                  Track This Bus
+                  {getButtonText()}
                 </Button>
               </CardContent>
             </Card>

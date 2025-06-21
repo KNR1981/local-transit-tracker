@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Menu, User, Route, HelpCircle, LogOut } from "lucide-react";
+import { Menu, User, HelpCircle, LogOut } from "lucide-react";
 import { useState } from "react";
 import {
   DropdownMenu,
@@ -38,10 +38,10 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick }: HeaderP
               <img 
                 src="/lovable-uploads/c25c33f6-71c0-4b72-bb70-73d697dc99f9.png" 
                 alt="Gamyam Logo"
-                className="h-8 w-auto"
+                className="h-12 w-auto"
               />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Gamyam</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Gamyam</h1>
           </div>
           
           <div className="hidden md:flex items-center space-x-4">
@@ -57,10 +57,6 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick }: HeaderP
                     <DropdownMenuItem className="cursor-pointer">
                       <User className="mr-2 h-4 w-4" />
                       <span>Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
-                      <Route className="mr-2 h-4 w-4" />
-                      <span>Route</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
                       <HelpCircle className="mr-2 h-4 w-4" />
@@ -105,10 +101,6 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick }: HeaderP
                   <Button variant="ghost" className="justify-start">
                     <User className="mr-2 h-4 w-4" />
                     Profile
-                  </Button>
-                  <Button variant="ghost" className="justify-start">
-                    <Route className="mr-2 h-4 w-4" />
-                    Route
                   </Button>
                   <Button variant="ghost" className="justify-start">
                     <HelpCircle className="mr-2 h-4 w-4" />
