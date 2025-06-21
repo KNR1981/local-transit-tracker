@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Header from "@/components/Header";
 import LandingPage from "@/components/LandingPage";
@@ -9,6 +8,8 @@ import BusOptions from "@/components/BusOptions";
 import BusMap from "@/components/BusMap";
 import Profile from "@/components/Profile";
 import HelpCenter from "@/components/HelpCenter";
+import Mitrama from "@/components/Mitrama";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 type AuthType = 'login' | 'signup';
 type BusType = 'local' | 'district' | 'state';
@@ -121,28 +122,33 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {currentView !== 'bus-map' && (
-        <Header
-          onAuthClick={handleAuthClick}
-          isAuthenticated={isAuthenticated}
-          onLogout={handleLogout}
-          onLogoClick={handleLogoClick}
-          onProfileClick={handleProfileClick}
-          onHelpClick={handleHelpClick}
-        />
-      )}
-      
-      {renderCurrentView()}
+    <LanguageProvider>
+      <div className="min-h-screen bg-background">
+        {currentView !== 'bus-map' && (
+          <Header
+            onAuthClick={handleAuthClick}
+            isAuthenticated={isAuthenticated}
+            onLogout={handleLogout}
+            onLogoClick={handleLogoClick}
+            onProfileClick={handleProfileClick}
+            onHelpClick={handleHelpClick}
+          />
+        )}
+        
+        {renderCurrentView()}
 
-      {showAuthModal && (
-        <AuthModal
-          type={showAuthModal}
-          onClose={() => setShowAuthModal(null)}
-          onSuccess={handleAuthSuccess}
-        />
-      )}
-    </div>
+        {/* Mitrama Chatbot - Show everywhere */}
+        <Mitrama />
+
+        {showAuthModal && (
+          <AuthModal
+            type={showAuthModal}
+            onClose={() => setShowAuthModal(null)}
+            onSuccess={handleAuthSuccess}
+          />
+        )}
+      </div>
+    </LanguageProvider>
   );
 };
 

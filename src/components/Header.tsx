@@ -9,6 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface HeaderProps {
   onAuthClick: (type: 'login' | 'signup') => void;
@@ -21,6 +23,7 @@ interface HeaderProps {
 
 const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick, onProfileClick, onHelpClick }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   const handleLogoClick = () => {
     if (isAuthenticated && onLogoClick) {
@@ -47,6 +50,7 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick, onProfile
           </div>
           
           <div className="hidden md:flex items-center space-x-4">
+            <LanguageSwitcher />
             {isAuthenticated ? (
               <>
                 <DropdownMenu>
@@ -58,16 +62,16 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick, onProfile
                   <DropdownMenuContent className="w-56 bg-white border shadow-lg">
                     <DropdownMenuItem className="cursor-pointer" onClick={onProfileClick}>
                       <User className="mr-2 h-4 w-4" />
-                      <span>Profile</span>
+                      <span>{t('profile')}</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer" onClick={onHelpClick}>
                       <HelpCircle className="mr-2 h-4 w-4" />
-                      <span>Help Center</span>
+                      <span>{t('helpCenter')}</span>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem className="cursor-pointer" onClick={onLogout}>
                       <LogOut className="mr-2 h-4 w-4" />
-                      <span>Logout</span>
+                      <span>{t('logout')}</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -75,16 +79,17 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick, onProfile
             ) : (
               <>
                 <Button variant="outline" onClick={() => onAuthClick('login')}>
-                  Login
+                  {t('login')}
                 </Button>
                 <Button onClick={() => onAuthClick('signup')}>
-                  Sign Up
+                  {t('signup')}
                 </Button>
               </>
             )}
           </div>
           
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-2">
+            <LanguageSwitcher />
             <Button
               variant="ghost"
               size="sm"
@@ -102,24 +107,24 @@ const Header = ({ onAuthClick, isAuthenticated, onLogout, onLogoClick, onProfile
                 <>
                   <Button variant="ghost" className="justify-start" onClick={onProfileClick}>
                     <User className="mr-2 h-4 w-4" />
-                    Profile
+                    {t('profile')}
                   </Button>
                   <Button variant="ghost" className="justify-start" onClick={onHelpClick}>
                     <HelpCircle className="mr-2 h-4 w-4" />
-                    Help Center
+                    {t('helpCenter')}
                   </Button>
                   <Button variant="outline" onClick={onLogout} className="justify-start">
                     <LogOut className="mr-2 h-4 w-4" />
-                    Logout
+                    {t('logout')}
                   </Button>
                 </>
               ) : (
                 <>
                   <Button variant="outline" onClick={() => onAuthClick('login')}>
-                    Login
+                    {t('login')}
                   </Button>
                   <Button onClick={() => onAuthClick('signup')}>
-                    Sign Up
+                    {t('signup')}
                   </Button>
                 </>
               )}
