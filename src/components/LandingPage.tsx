@@ -44,69 +44,66 @@ const LandingPage = ({ onAuthClick }: LandingPageProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 overflow-x-hidden">
       {/* Hero Section with Background Image */}
       <div 
-        className="min-h-screen container mx-auto px-4 py-16 relative"
+        className="min-h-screen flex items-center justify-center relative bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('/lovable-uploads/5284f5e1-9861-4206-977b-2bb031cd96f0.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          width: '100vw',
-          marginLeft: 'calc(-50vw + 50%)',
-          marginRight: 'calc(-50vw + 50%)'
         }}
       >
-        <div className="text-center max-w-4xl mx-auto relative z-10">
-          <div className="mb-8">
-            <div className="inline-flex items-center space-x-2 bg-blue-100 bg-opacity-90 px-4 py-2 rounded-full mb-6">
-              <MapPin className="h-5 w-5 text-blue-600" />
-              <span className="text-blue-800 font-medium">Government Bus Tracking</span>
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="container mx-auto px-4 py-16 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="mb-8">
+              <div className="inline-flex items-center space-x-2 bg-blue-100 bg-opacity-90 px-4 py-2 rounded-full mb-6">
+                <MapPin className="h-5 w-5 text-blue-600" />
+                <span className="text-blue-800 font-medium">Government Bus Tracking</span>
+              </div>
             </div>
-          </div>
-          
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Track Your Bus with
-            <span className="text-yellow-400"> Gamyam</span>
-          </h1>
-          
-          <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            Never miss your bus again. Track government buses in real-time, 
-            get accurate arrival predictions, and plan your journey with confidence using Gamyam.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button 
-              size="lg" 
-              className="text-lg px-8 py-3"
-              onClick={() => onAuthClick('signup')}
-            >
-              Get Started Free
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="text-lg px-8 py-3 bg-white text-gray-900 hover:bg-gray-100"
-              onClick={() => onAuthClick('login')}
-            >
-              Sign In
-            </Button>
-          </div>
-          
-          <div className="bg-white bg-opacity-95 rounded-2xl shadow-xl p-8 max-w-3xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              <div>
-                <div className="text-3xl font-bold text-blue-600">9000+</div>
-                <div className="text-gray-600">Active Buses</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-green-600">36000+</div>
-                <div className="text-gray-600">Routes Covered</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-purple-600">45000+</div>
-                <div className="text-gray-600">Employees</div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+              Track Your Bus with
+              <span className="text-yellow-400"> Gamyam</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+              Never miss your bus again. Track government buses in real-time, 
+              get accurate arrival predictions, and plan your journey with confidence using Gamyam.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <Button 
+                size="lg" 
+                className="text-lg px-8 py-3"
+                onClick={() => onAuthClick('signup')}
+              >
+                Get Started Free
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="text-lg px-8 py-3 bg-white text-gray-900 hover:bg-gray-100"
+                onClick={() => onAuthClick('login')}
+              >
+                Sign In
+              </Button>
+            </div>
+            
+            <div className="bg-white bg-opacity-95 rounded-2xl shadow-xl p-6 md:p-8 max-w-3xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <div className="text-2xl md:text-3xl font-bold text-blue-600">9000+</div>
+                  <div className="text-gray-600">Active Buses</div>
+                </div>
+                <div>
+                  <div className="text-2xl md:text-3xl font-bold text-green-600">36000+</div>
+                  <div className="text-gray-600">Routes Covered</div>
+                </div>
+                <div>
+                  <div className="text-2xl md:text-3xl font-bold text-purple-600">45000+</div>
+                  <div className="text-gray-600">Employees</div>
+                </div>
               </div>
             </div>
           </div>
